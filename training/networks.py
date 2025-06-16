@@ -448,7 +448,7 @@ class CEDMPrecond(torch.nn.Module):
         self.model_out_channels = model_out_channels
         self.model              = globals()[model_type](img_resolution=min(img_res_h, img_res_w), in_channels=model_in_channels, out_channels=model_out_channels, label_dim=label_dim, **model_kwargs)
 
-    def forward(self, x, condition, sigma, class_labels=None, force_fp32=False, **model_kwargs):
+    def forward(self, x, sigma, conditions=None, class_labels=None, force_fp32=False, **model_kwargs):
         x = x.to(torch.float32)
         sigma = sigma.to(torch.float32).reshape(-1, 1, 1, 1)
         class_labels = None if self.label_dim == 0 else torch.zeros([1, self.label_dim], device=x.device) if class_labels is None else class_labels.to(torch.float32).reshape(-1, self.label_dim)
@@ -459,11 +459,11 @@ class CEDMPrecond(torch.nn.Module):
         c_in = 1 / (self.sigma_data ** 2 + sigma ** 2).sqrt()
         c_noise = sigma.log() / 4
 
-        # assuming condition has the same shape already 
+        # assuming condition has the same H,W already 
         if self.img_cond_channels > 0:
             # conditoin: (B,C,H,W)
-            assert condition.shape[1] == self.img_cond_channels, f"Condition channels {condition.shape[1]} do not match expected {self.img_cond_channels}"
-            aug = torch.cat([c_in * x, condition], dim=1)
+            assert conditions.shape[1] == self.img_cond_channels, f"Condition channels {conditions.shape[1]} do not match expected {self.img_cond_channels}"
+            aug = torch.cat([c_in * x, conditions], dim=1)
         else:
             # no condition
             aug = c_in * x
