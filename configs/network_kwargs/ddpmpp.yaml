@@ -1,0 +1,12 @@
+model_type: SongUNet
+embedding_type: positional
+encoder_type: standard
+decoder_type: standard
+channel_mult_noise: 1
+resample_filter: [1, 1]
+model_channels: 128
+channel_mult: [2, 2, 2]
+
+dropout: 0.13
+use_fp16: false
+class_name: training.networks.CEDMPrecond

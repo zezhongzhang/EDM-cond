@@ -5,7 +5,7 @@ import io
 from torch.utils.data import Dataset
 
 class CondDataset(Dataset):
-    def __init__(self, path, img_res_h, img_res_w, img_channels, cond_channels,
+    def __init__(self, path, img_res_h, img_res_w, img_input_channels, img_cond_channels,
                  xflip=False, yflip=False, cache=False, max_mismatches=0):
         """
         Args:
@@ -17,14 +17,18 @@ class CondDataset(Dataset):
             cache (bool): Cache data in RAM.
             max_mismatches (int): Max shape mismatches to show before stopping.
         """
-        self.path = path
-        self.image_shape = (img_channels, img_res_h, img_res_w)
-        self.condition_shape = (cond_channels, img_res_h, img_res_w)
-        self._xflip = xflip
-        self._yflip = yflip
-        self._cache = cache
-        self._cached_data = {}
-        self._zipfile = None
+        self.path               = path
+        self.img_res_h          = img_res_h
+        self.img_res_w          = img_res_w
+        self.img_input_channels = img_input_channels
+        self.img_cond_channels  = img_cond_channels
+        self.image_shape        = (img_input_channels, img_res_h, img_res_w)
+        self.condition_shape    = (img_cond_channels, img_res_h, img_res_w)
+        self._xflip             = xflip
+        self._yflip             = yflip
+        self._cache             = cache
+        self._cached_data       = {}
+        self._zipfile           = None
 
         # File list
         if os.path.isdir(path):

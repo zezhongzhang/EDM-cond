@@ -1,0 +1,15 @@
+defaults:
+  - override /dataset: test_data
+  - override /network: ddpmpp
+  - _self_
+
+total_kimg: 200000
+ema_halflife_kimg: 500
+batch_size: 512
+batch_gpu: None
+loss_scaling: 1.0
+cudnn_benchmark: True
+kimg_per_tick: 50
+snapshot_ticks: 50
+state_dump_ticks: 500
+seed: 1763321001

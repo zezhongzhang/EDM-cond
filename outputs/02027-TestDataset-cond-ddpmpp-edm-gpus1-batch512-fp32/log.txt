@@ -1,0 +1,21 @@
+Loading dataset...
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "C:\Users\10576\OneDrive_Zezhong\OneDrive\working_project\EDM-cond\train_cond.py", line 260, in <module>
+[rank0]:     main()
+[rank0]:   File "C:\Users\10576\Anaconda3\lib\site-packages\click\core.py", line 1128, in __call__
+[rank0]:     return self.main(*args, **kwargs)
+[rank0]:   File "C:\Users\10576\Anaconda3\lib\site-packages\click\core.py", line 1053, in main
+[rank0]:     rv = self.invoke(ctx)
+[rank0]:   File "C:\Users\10576\Anaconda3\lib\site-packages\click\core.py", line 1395, in invoke
+[rank0]:     return ctx.invoke(self.callback, **ctx.params)
+[rank0]:   File "C:\Users\10576\Anaconda3\lib\site-packages\click\core.py", line 754, in invoke
+[rank0]:     return __callback(*args, **kwargs)
+[rank0]:   File "C:\Users\10576\OneDrive_Zezhong\OneDrive\working_project\EDM-cond\train_cond.py", line 255, in main
+[rank0]:     training_loop_cond.training_loop(**c)
+[rank0]:   File "C:\Users\10576\OneDrive_Zezhong\OneDrive\working_project\EDM-cond\training\training_loop_cond.py", line 68, in training_loop
+[rank0]:     dataset_obj = dnnlib.util.construct_class_by_name(**dataset_kwargs) # subclass of training.dataset.Dataset
+[rank0]:   File "C:\Users\10576\OneDrive_Zezhong\OneDrive\working_project\EDM-cond\dnnlib\util.py", line 302, in construct_class_by_name
+[rank0]:     return call_func_by_name(*args, func_name=class_name, **kwargs)
+[rank0]:   File "C:\Users\10576\OneDrive_Zezhong\OneDrive\working_project\EDM-cond\dnnlib\util.py", line 297, in call_func_by_name
+[rank0]:     return func_obj(*args, **kwargs)
+[rank0]: TypeError: __init__() got an unexpected keyword argument 'resolution'

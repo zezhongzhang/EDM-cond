@@ -1,0 +1,10 @@
+path: test_data/snaps
+name: test_dataset
+img_res_h: 128
+img_res_w: 64
+img_input_channels: 2
+img_cond_channels: 10
+xflip: True
+yflip: True
+cache: True
+class_name: training.dataset_cond.CondDataset
