@@ -125,16 +125,25 @@ def main(c: DictConfig):
                 f.write(f"{o} ")
         dnnlib.util.Logger(file_name=os.path.join(c.run_dir, 'log.txt'), file_mode='a', should_flush=True)
 
+    # Select batch size per GPU.
+    batch_gpu = c.batch_gpu
+    batch_gpu_total = c.batch_size // dist.get_world_size()
+    if batch_gpu is None or batch_gpu > batch_gpu_total:
+        batch_gpu = batch_gpu_total
+    num_accumulation_rounds = batch_gpu_total // batch_gpu
+    assert c.batch_size == batch_gpu * num_accumulation_rounds * dist.get_world_size()
+
+
     # testing dataloader
     dist.print0('Loading dataset...')
     dataset_obj = dnnlib.util.construct_class_by_name(**c.dataset_kwargs) # subclass of training.dataset.Dataset
     dataset_sampler = misc.InfiniteSampler(dataset=dataset_obj, rank=dist.get_rank(), num_replicas=dist.get_world_size(), seed=seed)
-    dataset_iterator = iter(torch.utils.data.DataLoader(dataset=dataset_obj, sampler=dataset_sampler, batch_size=c.batch_gpu, **c.data_loader_kwargs))
+    dataset_iterator = iter(torch.utils.data.DataLoader(dataset=dataset_obj, sampler=dataset_sampler, batch_size=batch_gpu, **c.data_loader_kwargs))
 
     test_iter = 10
     for i in range(test_iter):
         images, conditions = next(dataset_iterator)
-        dist.print0('image:', images.shape,'conditions:', conditions.shape)
+        dist.print0('iter:',i , 'image:', images.shape,'conditions:', conditions.shape)
 #----------------------------------------------------------------------------
 
 if __name__ == "__main__":
