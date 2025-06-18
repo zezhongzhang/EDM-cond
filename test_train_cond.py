@@ -123,7 +123,6 @@ def main(c: DictConfig):
                 f.write(f"{o} ")
         dnnlib.util.Logger(file_name=os.path.join(c.run_dir, 'log.txt'), file_mode='a', should_flush=True)
 
-    return
     # Train.
     training_loop_cond.training_loop(**c)
 

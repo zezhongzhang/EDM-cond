@@ -430,6 +430,7 @@ class CEDMPrecond(torch.nn.Module):
         sigma_max  = float('inf'),          # Maximum supported noise level.
         sigma_data = 0.5,                   # Expected standard deviation of the training data.
         model_type = 'SongUNet',            # Class name of the underlying model.
+        model_name = 'None' ,
         **model_kwargs,                     # Keyword arguments for the underlying model.
     ):
         super().__init__()
@@ -446,7 +447,9 @@ class CEDMPrecond(torch.nn.Module):
         model_out_channels      = img_input_channels
         self.model_in_channels  = model_in_channels
         self.model_out_channels = model_out_channels
-        self.model              = globals()[model_type](img_resolution=min(img_res_h, img_res_w), in_channels=model_in_channels, out_channels=model_out_channels, label_dim=label_dim, **model_kwargs)
+        self.model_name         = model_name
+        self.img_resolution     = min(img_res_h, img_res_w)
+        self.model              = globals()[model_type](img_resolution=self.img_resolution, in_channels=model_in_channels, out_channels=model_out_channels, label_dim=label_dim, **model_kwargs)
 
     def forward(self, x, sigma, conditions=None, class_labels=None, force_fp32=False, **model_kwargs):
         x = x.to(torch.float32)

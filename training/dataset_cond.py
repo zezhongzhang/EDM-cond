@@ -100,7 +100,7 @@ class CondDataset(Dataset):
         return data
 
     def _check_shapes(self, max_mismatches=0):
-        print("🔍 Checking file shapes...")
+        print("Checking file shapes...")
         mismatch_count = 0
         for fname in self._file_list:
             try:
@@ -109,19 +109,19 @@ class CondDataset(Dataset):
                 cond_shape = tuple(data['conditions'].shape)
 
                 if img_shape != self.image_shape or cond_shape != self.condition_shape:
-                    print(f"❌ Mismatch in {fname}: image {img_shape}, condition {cond_shape}")
+                    print(f"Mismatch in {fname}: image {img_shape}, condition {cond_shape}")
                     mismatch_count += 1
                     if mismatch_count >= max_mismatches:
-                        print("⚠ Max mismatches reached.")
+                        print("Max mismatches reached.")
                         break
             except Exception as e:
-                print(f"⚠ Failed to read {fname}: {e}")
+                print(f"Failed to read {fname}: {e}")
                 mismatch_count += 1
                 if mismatch_count >= max_mismatches:
                     break
 
         if mismatch_count == 0:
-            print("✅ All files match expected shapes.")
+            print("All files match expected shapes.")
         else:
             raise ValueError(f"{mismatch_count} file(s) had shape mismatches.")
 
