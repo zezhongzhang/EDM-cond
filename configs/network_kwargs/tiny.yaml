@@ -2,13 +2,10 @@ defaults:
   - default
   - _self_
 
-# model setting 
 model_name: tiny
-model_type: SongUNet
-embedding_type: positional
-encoder_type: standard
-decoder_type: standard
-channel_mult_noise: 1
-resample_filter: [1, 1]
-model_channels: 64
-channel_mult: [1, 1]
+# model settings
+model_channels: 32              # Base multiplier for the number of channels.
+channel_mult: [1,1]           # Per-resolution multipliers for the number of channels.
+channel_mult_emb: 2               # Multiplier for the dimensionality of the embedding vector.
+num_blocks: 1                     # Number of residual blocks per resolution.
+attn_resolutions: [8]            # List of resolutions with self-attention.

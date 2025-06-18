@@ -3,28 +3,27 @@ defaults:
   - override /dataset_kwargs: testdata
   - override /network_kwargs: tiny
 
-# some comment settings
-# ========================
-# Main options
-# ========================
+# ================================================================================================
+# default settings for all configs values 
 outdir: outputs       # Where to save the results
 
 # ========================
 # Training related
-# ========================
-duration: 200         # Training duration in MIMG (million images)
-batch: 512            # Total batch size across all GPUs
+duration: 1         # Training duration in MIMG (million images)
+batch_size: 32            # Total batch size across all GPUs
 batch_gpu: null       # Limit batch size per GPU
 optimizer_kwargs:
   class_name: torch.optim.Adam
   lr: 0.001    # Learning rate
 
 
+
 # ========================
 # I/O-related
 # ========================
-tick: 50              # How often to print progress (in KIMG)
-snap: 50              # How often to save snapshots (in ticks)
-dump: 500             # How often to dump training state (in ticks)
+kimg_per_tick: 1              # How often to print progress (in KIMG)
+snapshot_ticks: 10              # How often to save snapshots (in ticks)
+state_dump_ticks: 50             # How often to dump training state (in ticks)
 dry_run: false        # Print training options and exit
 
+# ================================================================================================

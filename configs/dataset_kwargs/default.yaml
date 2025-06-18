@@ -1,7 +1,8 @@
-path: defualt
 name: defualt
-img_res_h: 64
-img_res_w: 64
+# 
+path: defualt
+img_res_h: 32
+img_res_w: 32
 img_input_channels: 1
 img_cond_channels: 1
 

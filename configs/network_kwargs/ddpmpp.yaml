@@ -2,8 +2,8 @@ defaults:
   - default
   - _self_
 
-# model setting
 model_name: ddpmpp
+# model setting
 model_type: SongUNet
 embedding_type: positional
 encoder_type: standard
