@@ -5,8 +5,8 @@ import io
 from torch.utils.data import Dataset
 
 class CondDataset(Dataset):
-    def __init__(self, path, img_res_h, img_res_w, img_input_channels, img_cond_channels,
-                 xflip=False, yflip=False, cache=False, max_mismatches=0):
+    def __init__(self, path, img_res_h, img_res_w, img_input_channels, img_cond_channels, name,
+                 xflip=False, yflip=False, cache=False, max_mismatches=0, **kwargs):
         """
         Args:
             path (str): Folder or .zip file with .pt files.
@@ -24,6 +24,7 @@ class CondDataset(Dataset):
         self.img_cond_channels  = img_cond_channels
         self.image_shape        = (img_input_channels, img_res_h, img_res_w)
         self.condition_shape    = (img_cond_channels, img_res_h, img_res_w)
+        self.name               = name
         self._xflip             = xflip
         self._yflip             = yflip
         self._cache             = cache

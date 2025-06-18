@@ -1,38 +1,81 @@
-# configs/main.yaml (or conf/main.yaml)
+# overwrite settings in the runs parameters
 defaults:
-  - _self_
-  - runs: test_run
+  - _self_ # Defaults go first (lower priority)
+  - dataset_kwargs: default
+  - network_kwargs: default
+  - runs: test_run  # Overrides go last (higher priority)
 
-outdir: output
-# Default global settings from EDM paper
-total_kimg: 200000
-ema_halflife_kimg: 500
-batch_size: 512
-batch_gpu: None
-loss_scaling: 1.0
-cudnn_benchmark: True
-kimg_per_tick: 50
-snapshot_ticks: 50
-state_dump_ticks: 500
-seed: 123456789
+# default settings for all configs values 
+# ========================
+# Main options
+# ========================
+outdir: outputs       # Where to save the results
 
-
-loss_kwargs:
-  class_name: training.loss.EDMLoss
-
-
+# ========================
+# Training related
+# ========================
+duration: 200         # Training duration in MIMG (million images)
+batch_size: 512            # Total batch size across all GPUs
+batch_gpu: null       # Limit batch size per GPU
+ema: 0.5              # EMA half-life in MIMG
+augment: 0.0          # Augment probability
 optimizer_kwargs:
   class_name: torch.optim.Adam
-  lr: 0.001
+  lr: 0.001    # Learning rate
   betas: [0.9, 0.999]
   eps: 1e-08
 
-network_kwargs:
-  class_name: training.networks.EDMPrecond
-  dropout: 0.13
-  use_fp16: False
 
+# ========================
+# Performance-related
+# ========================
+loss_scaling: 1                 # Loss scaling for fp16
+cudnn_benchmark: true           # Enable cuDNN benchmarking
+cache: true           # Cache dataset in CPU memory
+
+# ========================
+# I/O-related
+# ========================
+desc: null            # String to include in result directory name
+nosubdir: false       # Do not create a subdirectory for results
+kimg_per_tick: 50              # How often to print progress (in KIMG)
+snapshot_ticks: 50              # How often to save snapshots (in ticks)
+state_dump_ticks: 500             # How often to dump training state (in ticks)
+seed: null            # Random seed [default: random]
+transfer: null        # Path or URL to pretrained model for transfer learning
+resume: null          # Path to previous training state to resume
+dry_run: false        # Print training options and exit
+
+
+loss_kwargs:
+  class_name: training.loss.CEDMLoss
+
+
+# defaults setting for dataloader
 data_loader_kwargs:
   pin_memory: True
   num_workers: 1
   prefetch_factor: 2
+
+
+# place holder 
+# varialbe to be calculated in the scripts
+total_kimg: null
+ema_halflife_kimg: null
+resume_pkl: null
+ema_rampup_ratio: null
+run_dir: null
+
+
+# Completely disable Hydra outputs
+hydra:
+  job:
+    chdir: false
+  run:
+    dir: .
+  output_subdir: null
+  job_logging:
+    disable_existing_loggers: true
+    version: 1
+    root:
+      handlers: []

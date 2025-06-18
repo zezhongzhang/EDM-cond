@@ -16,8 +16,6 @@ import torch
 import dnnlib
 from torch_utils import distributed as dist
 from training import training_loop_cond
-from torch_utils import misc
-
 import hydra
 from omegaconf import DictConfig, OmegaConf
 from hydra.core.hydra_config import HydraConfig
@@ -125,16 +123,10 @@ def main(c: DictConfig):
                 f.write(f"{o} ")
         dnnlib.util.Logger(file_name=os.path.join(c.run_dir, 'log.txt'), file_mode='a', should_flush=True)
 
-    # testing dataloader
-    dist.print0('Loading dataset...')
-    dataset_obj = dnnlib.util.construct_class_by_name(**c.dataset_kwargs) # subclass of training.dataset.Dataset
-    dataset_sampler = misc.InfiniteSampler(dataset=dataset_obj, rank=dist.get_rank(), num_replicas=dist.get_world_size(), seed=seed)
-    dataset_iterator = iter(torch.utils.data.DataLoader(dataset=dataset_obj, sampler=dataset_sampler, batch_size=c.batch_gpu, **c.data_loader_kwargs))
+    return
+    # Train.
+    training_loop_cond.training_loop(**c)
 
-    test_iter = 10
-    for i in range(test_iter):
-        images, conditions = next(dataset_iterator)
-        dist.print0('image:', images.shape,'conditions:', conditions.shape)
 #----------------------------------------------------------------------------
 
 if __name__ == "__main__":

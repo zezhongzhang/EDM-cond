@@ -1,7 +1,7 @@
 # @package _global_
 defaults:
-  - override /dataset_kwargs: testdata
-  - override /network_kwargs: tiny
+  - override /dataset_kwargs: default
+  - override /network_kwargs: default
 
 # some comment settings
 # ========================
@@ -26,5 +26,5 @@ optimizer_kwargs:
 tick: 50              # How often to print progress (in KIMG)
 snap: 50              # How often to save snapshots (in ticks)
 dump: 500             # How often to dump training state (in ticks)
-dry_run: false        # Print training options and exit
+dry_run: true        # Print training options and exit
 

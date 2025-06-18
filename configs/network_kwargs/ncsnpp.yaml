@@ -1,3 +1,9 @@
+defaults:
+  - default
+  - _self_
+
+# model setting
+model_name: ncsnpp
 model_type: SongUNet
 embedding_type: fourier
 encoder_type: residual
