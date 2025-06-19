@@ -4,7 +4,8 @@ defaults:
 
 name: test_dataset
 # 
-path: test_data/snaps
+# path: data/test_data/snaps
+path: data/test_data/test_data.zip
 img_res_h: 128
 img_res_w: 64
 img_input_channels: 2

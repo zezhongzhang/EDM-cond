@@ -5,7 +5,7 @@ from tqdm import tqdm
 import shutil
 
 # Config
-base_dir = 'test_data'
+base_dir = 'data/test_data'
 snap_dir = os.path.join(base_dir, 'snaps')  # Store .pt files here
 zip_path = os.path.join(base_dir, 'test_data.zip')
 
@@ -44,9 +44,9 @@ if save_as_zip and not dry_run:
             full_path = os.path.join(snap_dir, fname)
             arcname = fname  # Store files flat in the zip
             zipf.write(full_path, arcname)
-    print(f"✅ Zipped dataset saved at: {zip_path}")
+    print(f"Zipped dataset saved at: {zip_path}")
 
     # Optional cleanup: remove only the snaps folder
     if cleanup:
         shutil.rmtree(snap_dir)
-        print(f"🧹 Removed snaps folder: {snap_dir}")
+        print(f"Removed snaps folder: {snap_dir}")
